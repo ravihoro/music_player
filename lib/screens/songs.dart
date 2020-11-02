@@ -29,7 +29,7 @@ class _SongsState extends State<Songs> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
-          "Music Player",
+          "Songs",
           style: TextStyle(
             color: Colors.amber,
           ),

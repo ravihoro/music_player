@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:music_player/screens/now_playing.dart';
 
 class CustomListTile extends StatelessWidget {
   final SongInfo song;
@@ -36,6 +37,10 @@ class CustomListTile extends StatelessWidget {
           color: Colors.amber,
         ),
       ),
+      onTap: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => NowPlaying()));
+      },
     );
   }
 }

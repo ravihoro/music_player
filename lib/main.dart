@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import './models/song_model.dart';
 import './screens/songs.dart';
 
 void main() {
@@ -10,6 +12,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Songs();
+    return ChangeNotifierProvider<SongModel>(
+      create: (context) => SongModel(),
+      child: Songs(),
+    );
   }
 }
