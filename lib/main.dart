@@ -4,9 +4,9 @@ import './models/song_model.dart';
 import './screens/songs.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: MyApp(),
-  ));
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SongModel>(
       create: (context) => SongModel(),
-      child: Songs(),
+      child: MaterialApp(
+        home: Songs(),
+      ),
     );
   }
 }

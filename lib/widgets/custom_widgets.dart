@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:music_player/screens/now_playing.dart';
+import 'package:music_player/models/song_model.dart';
+import 'package:provider/provider.dart';
 
 class CustomListTile extends StatelessWidget {
   final SongInfo song;
@@ -37,7 +39,19 @@ class CustomListTile extends StatelessWidget {
           color: Colors.amber,
         ),
       ),
+      subtitle: Text(
+        song.artist,
+        style: TextStyle(color: Colors.white),
+      ),
+      trailing: Text(
+        Duration(milliseconds: int.parse(song.duration))
+            .toString()
+            .substring(2, 7),
+        style: TextStyle(color: Colors.white),
+      ),
       onTap: () {
+        final songModel = Provider.of<SongModel>(context, listen: false);
+        songModel.setCurrentSong(song);
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => NowPlaying()));
       },

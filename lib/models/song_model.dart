@@ -6,7 +6,7 @@ class SongModel extends ChangeNotifier {
 
   SongInfo get currentSong => _currentSong;
 
-  set currentSong(SongInfo song) {
+  void setCurrentSong(SongInfo song) {
     _currentSong = song;
     notifyListeners();
   }

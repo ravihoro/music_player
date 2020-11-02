@@ -34,6 +34,13 @@ class _SongsState extends State<Songs> {
             color: Colors.amber,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            color: Colors.amber,
+            onPressed: () {},
+          ),
+        ],
       ),
       backgroundColor: Colors.grey[850],
       body: FutureBuilder(
