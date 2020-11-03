@@ -13,13 +13,13 @@ class _SongsState extends State<Songs> {
   FlutterAudioQuery audioQuery;
   Future<List<SongInfo>> songs;
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
     audioQuery = FlutterAudioQuery();
     songs = fetchSongs();
-    var songModel = Provider.of<SongModel>(context, listen: false);
-    songModel.setSongs(songs);
   }
 
   Future<List<SongInfo>> fetchSongs() async {
@@ -29,6 +29,7 @@ class _SongsState extends State<Songs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text(
@@ -56,6 +57,8 @@ class _SongsState extends State<Songs> {
               ),
             );
           } else {
+            var songModel = Provider.of<SongModel>(context, listen: false);
+            songModel.setSongs(snapshot.data);
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
@@ -74,8 +77,20 @@ class _SongsState extends State<Songs> {
           ),
           tooltip: 'Now Playing',
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => NowPlaying()));
+            var songModel = Provider.of<SongModel>(context, listen: false);
+            if (songModel.currentSong == null) {
+              final snackbar = SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: Colors.black,
+                  content: Text(
+                    'No song selected. Select a song',
+                    style: TextStyle(color: Colors.amber),
+                  ));
+              _scaffoldKey.currentState.showSnackBar(snackbar);
+            } else {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => NowPlaying()));
+            }
           }),
     );
   }

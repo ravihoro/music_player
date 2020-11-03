@@ -6,10 +6,10 @@ class SongModel extends ChangeNotifier {
   SongInfo _currentSong;
   bool _isPlaying = false;
   AudioPlayer player = AudioPlayer();
-  Future<List<SongInfo>> _songs;
+  List<SongInfo> _songs;
 
   SongInfo get currentSong => _currentSong;
-  Future<List<SongInfo>> get songs => _songs;
+  List<SongInfo> get songs => _songs;
   bool get isPlaying => _isPlaying;
 
   void setIsPlaying() {
@@ -22,8 +22,12 @@ class SongModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSongs(Future<List<SongInfo>> currentSongs) {
+  void setSongs(List<SongInfo> currentSongs) {
     _songs = currentSongs;
-    notifyListeners();
+    //notifyListeners();
+  }
+
+  void next() {
+    int index = _songs.indexOf(_currentSong);
   }
 }

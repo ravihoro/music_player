@@ -156,8 +156,8 @@ class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
                             songModel.player.setUrl(songModel.currentSong.uri);
                             songModel.player.play();
                           }
+                          songModel.setIsPlaying();
                         });
-                        songModel.setIsPlaying();
                       },
                     ),
                     IconButton(
