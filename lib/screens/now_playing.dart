@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:music_player/screens/songs.dart';
+//import 'package:music_player/screens/songs.dart';
 import '../models/song_model.dart';
 import 'package:provider/provider.dart';
+import 'package:just_audio/just_audio.dart';
 
 class NowPlaying extends StatefulWidget {
   @override
@@ -11,20 +12,9 @@ class NowPlaying extends StatefulWidget {
 class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
   double sliderValue = 0.0;
 
-  AnimationController _animationController;
-  var isPlaying = false;
-
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _animationController.dispose();
   }
 
   @override
@@ -153,21 +143,21 @@ class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
                     ),
                     IconButton(
                       iconSize: 50,
-                      icon: AnimatedIcon(
-                        icon: AnimatedIcons.play_pause,
-                        progress: _animationController,
-                      ),
+                      color: Colors.amber,
+                      icon: songModel.isPlaying
+                          ? Icon(Icons.pause_circle_outline)
+                          : Icon(Icons.play_circle_outline),
                       onPressed: () {
                         setState(() {
-                          songModel.setIsPlaying();
                           if (songModel.isPlaying) {
-                            //songModel.setIsPlaying();
-                            _animationController.forward();
+                            //player.setUrl(songModel.currentSong.uri);
+                            songModel.player.pause();
                           } else {
-                            //songModel.setIsPlaying();
-                            _animationController.reverse();
+                            songModel.player.setUrl(songModel.currentSong.uri);
+                            songModel.player.play();
                           }
                         });
+                        songModel.setIsPlaying();
                       },
                     ),
                     IconButton(
