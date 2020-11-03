@@ -144,13 +144,11 @@ class CustomListTile extends StatelessWidget {
       onTap: () {
         final songModel = Provider.of<SongModel>(context, listen: false);
         if (songModel.currentSong != null && song != songModel.currentSong) {
-          songModel.setIsPlaying();
-          songModel.player.stop();
+          songModel.stop();
         }
         songModel.setCurrentSong(song);
-        songModel.player.setUrl(songModel.currentSong.uri);
-        songModel.player.play();
-        songModel.setIsPlaying();
+        songModel.play();
+
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => NowPlaying()));
       },

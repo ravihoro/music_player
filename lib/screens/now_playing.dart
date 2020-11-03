@@ -139,7 +139,9 @@ class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
                         Icons.skip_previous,
                       ),
                       color: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        songModel.prev();
+                      },
                     ),
                     IconButton(
                       iconSize: 50,
@@ -166,7 +168,9 @@ class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
                         Icons.skip_next,
                       ),
                       color: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        songModel.next();
+                      },
                     ),
                   ],
                 ),
