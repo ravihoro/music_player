@@ -106,18 +106,26 @@ class CustomListTile extends StatelessWidget {
     return ListTile(
       leading: song.albumArtwork == null
           ? Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50.0),
+                border: Border.all(color: Colors.amber),
+              ),
               height: 50,
               width: 50,
               child: CircleAvatar(
-                backgroundColor: Colors.amber,
+                backgroundColor: Colors.black,
                 foregroundColor: Colors.grey[850],
-                child: Text('NA'),
+                child: Text(
+                  'NA',
+                  style: TextStyle(color: Colors.amber),
+                ),
               ),
             )
           : Container(
               height: 50,
               width: 50,
               decoration: BoxDecoration(
+                border: Border.all(color: Colors.amber),
                 borderRadius: BorderRadius.circular(25),
                 image: DecorationImage(
                   image: AssetImage(song.albumArtwork),

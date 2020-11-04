@@ -6,11 +6,23 @@ class SongModel extends ChangeNotifier {
   SongInfo _currentSong;
   bool _isPlaying = false;
   AudioPlayer player = AudioPlayer();
+  ProcessingState _processingState = ProcessingState.none;
   List<SongInfo> _songs;
+  Duration _currentPosition = Duration.zero;
 
   SongInfo get currentSong => _currentSong;
   List<SongInfo> get songs => _songs;
   bool get isPlaying => _isPlaying;
+  ProcessingState get processingState => _processingState;
+
+  void setProcessingState(ProcessingState state) {
+    _processingState = state;
+    //notifyListeners();
+  }
+
+  void setCurrentPosition(Duration val) {
+    _currentPosition = val;
+  }
 
   void setIsPlaying() {
     _isPlaying = !_isPlaying;
@@ -54,13 +66,19 @@ class SongModel extends ChangeNotifier {
   }
 
   void play() {
+    //if (_currentPosition != Duration.zero) {
+    //  player.seek(Duration(
+    //      milliseconds: _currentPosition.inMilliseconds.toDouble().round()));
+    //} else {
     player.setUrl(_currentSong.uri);
     player.play();
+    //}
     if (!isPlaying) setIsPlaying();
   }
 
   void stop() {
     player.stop();
+    //_currentPosition = Duration.zero;
     if (isPlaying) setIsPlaying();
   }
 }
