@@ -3,7 +3,7 @@
 A music player built using Flutter
 
 ## Features
-- Play/pause songs
+- Play/pause songs from phone storage
 - Skip to next/previous song
 
 
