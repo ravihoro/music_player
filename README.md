@@ -1,4 +1,4 @@
-# music_player
+# Music Player
 
 A music player built using Flutter
 
