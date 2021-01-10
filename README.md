@@ -3,13 +3,14 @@
 A music player built using Flutter
 
 ## Features
-- Play/pause songs from phone storage
+- Play songs from local storage
+- Play/pause current song
 - Skip to next/previous song
 
 
 ## Tools Used
 - Flutter
-- Provider State Management
+- ChangeNotifierProvider
 - Flutter Audio Query plugin
 
 ## Screenshots
