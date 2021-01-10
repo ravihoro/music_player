@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-//import 'package:music_player/screens/songs.dart';
 import '../models/song_model.dart';
 import 'package:provider/provider.dart';
-//import 'package:just_audio/just_audio.dart';
+import '../util/utility.dart';
 
 class NowPlaying extends StatefulWidget {
   @override
@@ -103,8 +102,8 @@ class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
                                 ),
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    songModel.currentSong.albumArtwork,
+                                  image: FileImage(
+                                    getImage(songModel.currentSong),
                                   ),
                                 ),
                               ),

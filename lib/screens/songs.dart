@@ -3,6 +3,7 @@ import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:music_player/screens/now_playing.dart';
 import 'package:provider/provider.dart';
 import '../models/song_model.dart';
+import '../util/utility.dart';
 
 class Songs extends StatefulWidget {
   @override
@@ -128,7 +129,7 @@ class CustomListTile extends StatelessWidget {
                 border: Border.all(color: Colors.amber),
                 borderRadius: BorderRadius.circular(25),
                 image: DecorationImage(
-                  image: AssetImage(song.albumArtwork),
+                  image: FileImage(getImage(song)),
                   fit: BoxFit.cover,
                 ),
               ),
