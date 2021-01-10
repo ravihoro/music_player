@@ -13,5 +13,5 @@ A music player built using Flutter
 - Flutter Audio Query plugin
 
 ## Screenshots
-![](screenshots/musicPlayer1.jpg)
-![](screenshots/musicPlayer1.jpg)
+<img src = "screenshots/musicPlayer1.jpg" width = 100>
+<img src = "screenshots/musicPlayer2.jpg" width = 100>
