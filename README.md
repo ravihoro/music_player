@@ -11,3 +11,7 @@ A music player built using Flutter
 - Flutter
 - Provider State Management
 - Flutter Audio Query plugin
+
+## Screenshots
+![](screenshots/musicPlayer1.jpg)
+![](screenshots/musicPlayer1.jpg)
