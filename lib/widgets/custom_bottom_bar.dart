@@ -64,19 +64,11 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                     : Icon(Icons.play_circle_outline),
               ),
               onTap: () {
-                setState(() {
-                  if (widget.songModel.isPlaying) {
-                    //player.setUrl(songModel.currentSong.uri);
-                    widget.songModel.player.pause();
-                    widget.songModel
-                        .setCurrentPosition(widget.songModel.player.position);
-                  } else {
-                    widget.songModel.player
-                        .setUrl(widget.songModel.currentSong.uri);
-                    widget.songModel.player.play();
-                  }
-                  widget.songModel.setIsPlaying();
-                });
+                if (widget.songModel.isPlaying) {
+                  widget.songModel.pause();
+                } else {
+                  widget.songModel.play();
+                }
               },
             ),
             InkWell(

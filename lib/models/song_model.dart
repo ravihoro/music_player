@@ -32,7 +32,7 @@ class SongModel extends ChangeNotifier {
 
   void setCurrentSong(SongInfo song) {
     _currentSong = song;
-    notifyListeners();
+    //notifyListeners();
   }
 
   void setSongs(List<SongInfo> currentSongs) {

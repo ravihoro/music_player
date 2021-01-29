@@ -46,6 +46,7 @@ class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
                     ),
                     Text(
                       songModel.currentSong.title,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.amber,
                           fontSize: 30,
@@ -215,13 +216,11 @@ class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
                                 ? Icon(Icons.pause_circle_outline)
                                 : Icon(Icons.play_circle_outline),
                             onPressed: () {
-                              setState(() {
-                                if (songModel.isPlaying) {
-                                  songModel.pause();
-                                } else {
-                                  songModel.play();
-                                }
-                              });
+                              if (songModel.isPlaying) {
+                                songModel.pause();
+                              } else {
+                                songModel.play();
+                              }
                             },
                           ),
                           IconButton(
