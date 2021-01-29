@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:music_player/screens/now_playing.dart';
+import 'package:music_player/widgets/custom_bottom_bar.dart';
 import 'package:provider/provider.dart';
 import '../models/song_model.dart';
 import '../util/utility.dart';
@@ -16,6 +17,8 @@ class _SongsState extends State<Songs> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  //var model;
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +32,8 @@ class _SongsState extends State<Songs> {
 
   @override
   Widget build(BuildContext context) {
+    //var songModel = Provider.of<SongModel>(context, listen: false);
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -69,30 +74,41 @@ class _SongsState extends State<Songs> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black,
-          child: Icon(
-            Icons.play_arrow,
-            size: 35,
-            color: Colors.amber,
-          ),
-          tooltip: 'Now Playing',
-          onPressed: () {
-            var songModel = Provider.of<SongModel>(context, listen: false);
-            if (songModel.currentSong == null) {
-              final snackbar = SnackBar(
-                  duration: Duration(seconds: 1),
-                  backgroundColor: Colors.black,
-                  content: Text(
-                    'No song selected. Select a song',
-                    style: TextStyle(color: Colors.amber),
-                  ));
-              _scaffoldKey.currentState.showSnackBar(snackbar);
-            } else {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => NowPlaying()));
-            }
-          }),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.black,
+      //   child: Icon(
+      //     Icons.play_arrow,
+      //     size: 35,
+      //     color: Colors.amber,
+      //   ),
+      //   tooltip: 'Now Playing',
+      //   onPressed: () {
+      //     var songModel = Provider.of<SongModel>(context, listen: false);
+      //     if (songModel.currentSong == null) {
+      //       final snackbar = SnackBar(
+      //           duration: Duration(seconds: 1),
+      //           backgroundColor: Colors.black,
+      //           content: Text(
+      //             'No song selected. Select a song',
+      //             style: TextStyle(color: Colors.amber),
+      //           ));
+      //       _scaffoldKey.currentState.showSnackBar(snackbar);
+      //     } else {
+      //       Navigator.of(context)
+      //           .push(MaterialPageRoute(builder: (context) => NowPlaying()));
+      //     }
+      //   },
+      // ),
+      bottomNavigationBar: Consumer<SongModel>(
+        builder: (context, songModel, child) {
+          print(songModel.currentSong);
+          return songModel.currentSong != null
+              ? CustomBottomBar(songModel: songModel)
+              : Container(
+                  height: 0,
+                );
+        },
+      ),
     );
   }
 }

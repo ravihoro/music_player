@@ -1,0 +1,100 @@
+import 'package:flutter/material.dart';
+import '../models/song_model.dart';
+import '../util/utility.dart';
+import 'package:provider/provider.dart';
+import '../screens/now_playing.dart';
+
+class CustomBottomBar extends StatefulWidget {
+  final songModel;
+
+  CustomBottomBar({this.songModel});
+
+  @override
+  _CustomBottomBarState createState() => _CustomBottomBarState();
+}
+
+class _CustomBottomBarState extends State<CustomBottomBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      color: Colors.amber,
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Row(
+          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: CircleAvatar(
+                backgroundImage: FileImage(
+                  getImage(widget.songModel.currentSong),
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => NowPlaying()));
+                },
+                child: Text(
+                  widget.songModel.currentSong.title,
+                  overflow: TextOverflow.fade,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Icon(
+                  Icons.skip_previous,
+                ),
+              ),
+              onTap: () {
+                widget.songModel.prev();
+              },
+            ),
+            InkWell(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: widget.songModel.isPlaying
+                    ? Icon(Icons.pause_circle_outline)
+                    : Icon(Icons.play_circle_outline),
+              ),
+              onTap: () {
+                setState(() {
+                  if (widget.songModel.isPlaying) {
+                    //player.setUrl(songModel.currentSong.uri);
+                    widget.songModel.player.pause();
+                    widget.songModel
+                        .setCurrentPosition(widget.songModel.player.position);
+                  } else {
+                    widget.songModel.player
+                        .setUrl(widget.songModel.currentSong.uri);
+                    widget.songModel.player.play();
+                  }
+                  widget.songModel.setIsPlaying();
+                });
+              },
+            ),
+            InkWell(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Icon(
+                  Icons.skip_next,
+                ),
+              ),
+              onTap: () {
+                widget.songModel.next();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
