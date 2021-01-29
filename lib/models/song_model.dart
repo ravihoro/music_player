@@ -5,6 +5,7 @@ import 'package:just_audio/just_audio.dart';
 class SongModel extends ChangeNotifier {
   SongInfo _currentSong;
   bool _isPlaying = false;
+  //bool pause = false;
   AudioPlayer player = AudioPlayer();
   ProcessingState _processingState = ProcessingState.none;
   List<SongInfo> _songs;
@@ -49,7 +50,7 @@ class SongModel extends ChangeNotifier {
     //print("Index is: $index");
     stop();
     _currentSong = songs[index];
-    play();
+    play(true);
   }
 
   void prev() {
@@ -59,26 +60,24 @@ class SongModel extends ChangeNotifier {
     if (index < 0) {
       index = length - 1;
     }
-    //print("Index is: $index");
     stop();
     _currentSong = songs[index];
-    play();
+    play(true);
   }
 
-  void play() {
-    //if (_currentPosition != Duration.zero) {
-    //  player.seek(Duration(
-    //      milliseconds: _currentPosition.inMilliseconds.toDouble().round()));
-    //} else {
-    player.setUrl(_currentSong.uri);
+  void pause() {
+    player.pause();
+    if (isPlaying) setIsPlaying();
+  }
+
+  void play([bool newSong = false]) {
+    if (newSong) player.setUrl(_currentSong.uri);
     player.play();
-    //}
     if (!isPlaying) setIsPlaying();
   }
 
   void stop() {
     player.stop();
-    //_currentPosition = Duration.zero;
     if (isPlaying) setIsPlaying();
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/song_model.dart';
 import '../util/utility.dart';
-import 'package:provider/provider.dart';
 import '../screens/now_playing.dart';
 
 class CustomBottomBar extends StatefulWidget {

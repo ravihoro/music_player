@@ -34,80 +34,84 @@ class _SongsState extends State<Songs> {
   Widget build(BuildContext context) {
     //var songModel = Provider.of<SongModel>(context, listen: false);
 
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(
-          "Songs",
-          style: TextStyle(
-            color: Colors.amber,
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text(
+            "Songs",
+            style: TextStyle(
+              color: Colors.amber,
+            ),
           ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            color: Colors.amber,
-            onPressed: () {},
-          ),
-        ],
-      ),
-      backgroundColor: Colors.grey[850],
-      body: FutureBuilder<List<SongInfo>>(
-        future: songs,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.amber,
-              ),
-            );
-          } else {
-            var songModel = Provider.of<SongModel>(context, listen: false);
-            songModel.setSongs(snapshot.data);
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return CustomListTile(snapshot.data[index]);
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              color: Colors.amber,
+              onPressed: () {
+                showSearch(context: context, delegate: SongSearch());
               },
-            );
-          }
-        },
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Colors.black,
-      //   child: Icon(
-      //     Icons.play_arrow,
-      //     size: 35,
-      //     color: Colors.amber,
-      //   ),
-      //   tooltip: 'Now Playing',
-      //   onPressed: () {
-      //     var songModel = Provider.of<SongModel>(context, listen: false);
-      //     if (songModel.currentSong == null) {
-      //       final snackbar = SnackBar(
-      //           duration: Duration(seconds: 1),
-      //           backgroundColor: Colors.black,
-      //           content: Text(
-      //             'No song selected. Select a song',
-      //             style: TextStyle(color: Colors.amber),
-      //           ));
-      //       _scaffoldKey.currentState.showSnackBar(snackbar);
-      //     } else {
-      //       Navigator.of(context)
-      //           .push(MaterialPageRoute(builder: (context) => NowPlaying()));
-      //     }
-      //   },
-      // ),
-      bottomNavigationBar: Consumer<SongModel>(
-        builder: (context, songModel, child) {
-          print(songModel.currentSong);
-          return songModel.currentSong != null
-              ? CustomBottomBar(songModel: songModel)
-              : Container(
-                  height: 0,
-                );
-        },
+            ),
+          ],
+        ),
+        backgroundColor: Colors.grey[850],
+        body: FutureBuilder<List<SongInfo>>(
+          future: songs,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.amber,
+                ),
+              );
+            } else {
+              var songModel = Provider.of<SongModel>(context, listen: false);
+              songModel.setSongs(snapshot.data);
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return CustomListTile(snapshot.data[index]);
+                },
+              );
+            }
+          },
+        ),
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: Colors.black,
+        //   child: Icon(
+        //     Icons.play_arrow,
+        //     size: 35,
+        //     color: Colors.amber,
+        //   ),
+        //   tooltip: 'Now Playing',
+        //   onPressed: () {
+        //     var songModel = Provider.of<SongModel>(context, listen: false);
+        //     if (songModel.currentSong == null) {
+        //       final snackbar = SnackBar(
+        //           duration: Duration(seconds: 1),
+        //           backgroundColor: Colors.black,
+        //           content: Text(
+        //             'No song selected. Select a song',
+        //             style: TextStyle(color: Colors.amber),
+        //           ));
+        //       _scaffoldKey.currentState.showSnackBar(snackbar);
+        //     } else {
+        //       Navigator.of(context)
+        //           .push(MaterialPageRoute(builder: (context) => NowPlaying()));
+        //     }
+        //   },
+        // ),
+        bottomNavigationBar: Consumer<SongModel>(
+          builder: (context, songModel, child) {
+            print(songModel.currentSong);
+            return songModel.currentSong != null
+                ? CustomBottomBar(songModel: songModel)
+                : Container(
+                    height: 0,
+                  );
+          },
+        ),
       ),
     );
   }
@@ -115,8 +119,9 @@ class _SongsState extends State<Songs> {
 
 class CustomListTile extends StatelessWidget {
   final SongInfo song;
+  final bool search;
 
-  CustomListTile(this.song);
+  CustomListTile(this.song, [this.search = false]);
 
   @override
   Widget build(BuildContext context) {
@@ -171,12 +176,80 @@ class CustomListTile extends StatelessWidget {
         if (songModel.currentSong != null && song != songModel.currentSong) {
           songModel.stop();
         }
-        songModel.setCurrentSong(song);
-        songModel.play();
+        bool newSong = songModel.currentSong != song;
+        if (!newSong) {
+          songModel.setCurrentSong(song);
+        }
+        songModel.play(newSong);
+
+        if (search)
+          Navigator.of(context)
+              .pop(); //Close the search results when called during song search.
 
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => NowPlaying()));
       },
+    );
+  }
+}
+
+class SongSearch extends SearchDelegate {
+  @override
+  String get searchFieldLabel => 'Search song';
+
+  @override
+  TextStyle get searchFieldStyle => TextStyle(
+        color: Colors.white,
+        fontSize: 18.0,
+      );
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.cancel),
+        onPressed: () {
+          query = "";
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Consumer<SongModel>(
+      builder: (context, songModel, child) {
+        return Container(
+          color: Colors.grey[850],
+          child: ListView.builder(
+            itemCount: songModel.songs.length,
+            itemBuilder: (context, index) {
+              return songModel.songs[index].title
+                      .toLowerCase()
+                      .contains(query.toLowerCase())
+                  ? CustomListTile(songModel.songs[index], true)
+                  : Container();
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container(
+      color: Colors.grey[850],
     );
   }
 }
