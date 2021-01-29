@@ -6,6 +6,8 @@ A music player built using Flutter
 - Play songs from local storage
 - Play/pause current song
 - Skip to next/previous song
+- Search songs
+- Control song from bottom bar
 
 
 ## Tools Used
