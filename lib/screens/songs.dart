@@ -176,8 +176,11 @@ class CustomListTile extends StatelessWidget {
         if (songModel.currentSong != null && song != songModel.currentSong) {
           songModel.stop();
         }
-        bool newSong = songModel.currentSong != song;
-        if (!newSong) {
+        bool newSong = songModel.currentSong == null
+            ? true
+            : songModel.currentSong != song;
+
+        if (newSong) {
           songModel.setCurrentSong(song);
         }
         songModel.play(newSong);
