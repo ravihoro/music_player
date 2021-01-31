@@ -24,11 +24,16 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: CircleAvatar(
-                backgroundImage: FileImage(
-                  getImage(widget.songModel.currentSong),
-                ),
-              ),
+              child: widget.songModel.currentSong.albumArtwork == null
+                  ? CircleAvatar(
+                      child: Text("NA", style: TextStyle(color: Colors.amber)),
+                      backgroundColor: Colors.grey[850],
+                    )
+                  : CircleAvatar(
+                      backgroundImage: FileImage(
+                        getImage(widget.songModel.currentSong),
+                      ),
+                    ),
             ),
             Expanded(
               child: InkWell(

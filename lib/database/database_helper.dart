@@ -59,7 +59,6 @@ class DatabaseHelper {
   }
 
   Future<void> insertSong(Song song) async {
-    //print("Album is: ${song.album}");
     await _database.insert("songs", song.toMap());
   }
 
@@ -73,4 +72,51 @@ class DatabaseHelper {
     });
     return songs;
   }
+
+  Future<List<Song>> fetchSongsByAlbums() async {
+    List<Map> result =
+        await _database.query("songs", orderBy: "album", groupBy: "album");
+    List<Song> songs = [];
+    result.forEach((s) {
+      Song song = Song();
+      song = song.fromMap(s);
+      songs.add(song);
+    });
+    return songs;
+  }
+
+  Future<List<Song>> fetchAlbums() async {
+    List<Map> result = await _database.query("songs",
+        orderBy: "album", groupBy: "album", distinct: true);
+    List<Song> songs = [];
+    result.forEach((s) {
+      Song song = Song();
+      song = song.fromMap(s);
+      songs.add(song);
+    });
+    return songs;
+  }
+
+  Future<List<Song>> fetchArtists() async {
+    List<Map> result = await _database.query("songs",
+        groupBy: "artist", orderBy: "artist", distinct: true);
+    List<Song> songs = [];
+    result.forEach((s) {
+      Song song = Song();
+      song = song.fromMap(s);
+      songs.add(song);
+    });
+    return songs;
+  }
+
+  // Future<List<Song>> fetchSongsByArtists(int id) async {
+  //   List<Map> result = await _database.query("songs", groupBy: "artist");
+  //   List<Song> songs = [];
+  //   result.forEach((s) {
+  //     Song song = Song();
+  //     song = song.fromMap(s);
+  //     songs.add(song);
+  //   });
+  //   return songs;
+  // }
 }

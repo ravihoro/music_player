@@ -7,6 +7,7 @@ import 'package:flutter_audio_query/flutter_audio_query.dart';
 import './database/database_helper.dart';
 import './screens/screens.dart';
 import './widgets/custom_bottom_bar.dart';
+import './widgets/song_search.dart';
 
 void main() {
   runApp(
@@ -35,30 +36,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   DatabaseHelper databaseHelper;
   FlutterAudioQuery audioQuery;
 
-  List<Tab> _tabs = [
-    Tab(
-      child: Text("Songs"),
-    ),
-    Tab(
-      child: Text("Albums"),
-    ),
-    Tab(
-      child: Text("Artists"),
-    ),
-  ];
-  List<Widget> widgets = [
-    Songs(),
-    Albums(),
-    Artists(),
-  ];
-  TabController _tabController;
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -78,6 +55,12 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     final songModel = Provider.of<SongModel>(context, listen: false);
     //print(songs[0].album);
     songModel.setSongs(songs);
+
+    List<Song> albums = await databaseHelper.fetchAlbums();
+    songModel.setAlbums(albums);
+
+    List<Song> artists = await databaseHelper.fetchArtists();
+    songModel.setArtists(artists);
   }
 
   Future loadTable() async {

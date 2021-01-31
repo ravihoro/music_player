@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_audio_query/flutter_audio_query.dart';
+//import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/song.dart';
 
@@ -11,11 +11,13 @@ class SongModel extends ChangeNotifier {
   ProcessingState _processingState = ProcessingState.none;
   List<Song> _songs;
 
-  List<Song> _currentList;
-  List<Song> _albumSongs;
-  List<Song> _artistSongs;
+  List<Song> _albums;
+  List<Song> _artists;
 
   Duration _currentPosition = Duration.zero;
+
+  List<Song> get albums => _albums;
+  List<Song> get artists => _artists;
 
   Song get currentSong => _currentSong;
   List<Song> get songs => _songs;
@@ -42,8 +44,18 @@ class SongModel extends ChangeNotifier {
   }
 
   void setSongs(List<Song> currentSongs) {
-    print(currentSongs.length);
+    //print(currentSongs.length);
     _songs = currentSongs;
+    notifyListeners();
+  }
+
+  void setAlbums(List<Song> albums) {
+    _albums = albums;
+    notifyListeners();
+  }
+
+  void setArtists(List<Song> artists) {
+    _artists = artists;
     notifyListeners();
   }
 
