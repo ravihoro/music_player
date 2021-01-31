@@ -9,7 +9,7 @@ class NowPlaying extends StatefulWidget {
   _NowPlayingState createState() => _NowPlayingState();
 }
 
-class _NowPlayingState extends State<NowPlaying> with TickerProviderStateMixin {
+class _NowPlayingState extends State<NowPlaying> {
   double sliderValue;
 
   @override

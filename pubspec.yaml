@@ -31,6 +31,8 @@ dependencies:
   just_audio:
   flutter_audio_query:
   provider:
+  sqflite:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

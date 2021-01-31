@@ -1,18 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:just_audio/just_audio.dart';
+import '../models/song.dart';
 
 class SongModel extends ChangeNotifier {
-  SongInfo _currentSong;
+  Song _currentSong;
   bool _isPlaying = false;
   //bool pause = false;
   AudioPlayer player = AudioPlayer();
   ProcessingState _processingState = ProcessingState.none;
-  List<SongInfo> _songs;
+  List<Song> _songs;
+
+  List<Song> _currentList;
+  List<Song> _albumSongs;
+  List<Song> _artistSongs;
+
   Duration _currentPosition = Duration.zero;
 
-  SongInfo get currentSong => _currentSong;
-  List<SongInfo> get songs => _songs;
+  Song get currentSong => _currentSong;
+  List<Song> get songs => _songs;
   bool get isPlaying => _isPlaying;
   ProcessingState get processingState => _processingState;
 
@@ -30,14 +36,15 @@ class SongModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setCurrentSong(SongInfo song) {
+  void setCurrentSong(Song song) {
     _currentSong = song;
     //notifyListeners();
   }
 
-  void setSongs(List<SongInfo> currentSongs) {
+  void setSongs(List<Song> currentSongs) {
+    print(currentSongs.length);
     _songs = currentSongs;
-    //notifyListeners();
+    notifyListeners();
   }
 
   void next() {
