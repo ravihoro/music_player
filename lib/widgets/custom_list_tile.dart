@@ -46,7 +46,7 @@ class CustomListTile extends StatelessWidget {
       subtitle: Text(
         page == "songs" ||
                 page == "albumDetail" ||
-                page == "album" ||
+                page == "albums" ||
                 page == "nowPlaying"
             ? song.artist
             : song.album,
