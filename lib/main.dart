@@ -18,12 +18,25 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SongModel>(
-      create: (context) => SongModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<SongModel>(
+          create: (context) => SongModel(),
+        ),
+        ChangeNotifierProvider<DatabaseHelper>(
+          create: (context) => DatabaseHelper(),
+        ),
+      ],
       child: MaterialApp(
         home: MyApp(),
       ),
     );
+    // return ChangeNotifierProvider<SongModel>(
+    //   create: (context) => SongModel(),
+    //   child: MaterialApp(
+    //     home: MyApp(),
+    //   ),
+    // );
   }
 }
 
@@ -44,7 +57,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   }
 
   Future fetchSongs(BuildContext context) async {
-    databaseHelper = DatabaseHelper();
+    databaseHelper = Provider.of<DatabaseHelper>(context, listen: false);
     await databaseHelper.database;
     int count = await databaseHelper.count();
     //print("Count is: $count");
@@ -55,6 +68,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     final songModel = Provider.of<SongModel>(context, listen: false);
     //print(songs[0].album);
     songModel.setSongs(songs);
+
+    songModel.setCurrentSongsList(songs);
 
     List<Song> albums = await databaseHelper.fetchAlbums();
     songModel.setAlbums(albums);
@@ -122,9 +137,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         ),
         bottomNavigationBar: Consumer<SongModel>(
           builder: (context, songModel, child) {
-            print(songModel.currentSong);
+            //print(songModel.currentSong);
             return songModel.currentSong != null
-                ? CustomBottomBar(songModel: songModel)
+                ? CustomBottomBar()
                 : Container(
                     height: 0,
                   );

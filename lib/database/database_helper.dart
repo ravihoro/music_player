@@ -4,8 +4,9 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 
-class DatabaseHelper {
+class DatabaseHelper extends ChangeNotifier {
   static DatabaseHelper _databaseHelper;
   static Database _database;
 
@@ -97,6 +98,17 @@ class DatabaseHelper {
     return songs;
   }
 
+  Future<List<Song>> fetchAlbumById(String id) async {
+    List<Map> result = await _database.query("songs", where: "albumId == $id");
+    List<Song> songs = [];
+    result.forEach((s) {
+      Song song = Song();
+      song = song.fromMap(s);
+      songs.add(song);
+    });
+    return songs;
+  }
+
   Future<List<Song>> fetchArtists() async {
     List<Map> result = await _database.query("songs",
         groupBy: "artist", orderBy: "artist", distinct: true);
@@ -109,14 +121,14 @@ class DatabaseHelper {
     return songs;
   }
 
-  // Future<List<Song>> fetchSongsByArtists(int id) async {
-  //   List<Map> result = await _database.query("songs", groupBy: "artist");
-  //   List<Song> songs = [];
-  //   result.forEach((s) {
-  //     Song song = Song();
-  //     song = song.fromMap(s);
-  //     songs.add(song);
-  //   });
-  //   return songs;
-  // }
+  Future<List<Song>> fetchArtistById(String id) async {
+    List<Map> result = await _database.query("songs", where: "artistId == $id");
+    List<Song> songs = [];
+    result.forEach((s) {
+      Song song = Song();
+      song = song.fromMap(s);
+      songs.add(song);
+    });
+    return songs;
+  }
 }

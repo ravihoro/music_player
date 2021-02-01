@@ -72,44 +72,24 @@ class _NowPlayingState extends State<NowPlaying> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
                         ),
-                        child: songModel.currentSong.albumArtwork == null
-                            ? Container(
-                                clipBehavior: Clip.antiAlias,
-                                alignment: Alignment.center,
-                                height: 200,
-                                width: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                    color: Colors.amber,
-                                  ),
-                                  color: Colors.black,
-                                ),
-                                child: Text(
-                                  "NA",
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.amber,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                height: 200,
-                                width: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                    color: Colors.amber,
-                                  ),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: FileImage(
+                        child: Container(
+                          height: 200,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: Colors.amber,
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: songModel.currentSong.albumArtwork != null
+                                  ? FileImage(
                                       getImage(songModel.currentSong),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                    )
+                                  : AssetImage("assets/images/music.jpg"),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(

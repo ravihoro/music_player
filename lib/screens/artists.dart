@@ -15,7 +15,7 @@ class Artists extends StatelessWidget {
         return ListView.builder(
           itemCount: songModel.artists.length,
           itemBuilder: (context, index) {
-            return CustomListTile(songModel.albums[index], "artists");
+            return CustomListTile(songModel.artists[index], "artists");
           },
         );
       },

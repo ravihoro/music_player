@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import '../util/utility.dart';
 import '../screens/now_playing.dart';
+import 'package:provider/provider.dart';
+import '../models/song_model.dart';
 
 class CustomBottomBar extends StatefulWidget {
-  final songModel;
-
-  CustomBottomBar({this.songModel});
-
   @override
   _CustomBottomBarState createState() => _CustomBottomBarState();
 }
@@ -14,6 +12,8 @@ class CustomBottomBar extends StatefulWidget {
 class _CustomBottomBarState extends State<CustomBottomBar> {
   @override
   Widget build(BuildContext context) {
+    final songModel = Provider.of<SongModel>(context);
+
     return Container(
       height: 50,
       color: Colors.amber,
@@ -24,14 +24,15 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: widget.songModel.currentSong.albumArtwork == null
+              child: songModel.currentSong.albumArtwork == null
                   ? CircleAvatar(
-                      child: Text("NA", style: TextStyle(color: Colors.amber)),
-                      backgroundColor: Colors.grey[850],
+                      backgroundImage: AssetImage(
+                        "assets/images/music.jpg",
+                      ),
                     )
                   : CircleAvatar(
                       backgroundImage: FileImage(
-                        getImage(widget.songModel.currentSong),
+                        getImage(songModel.currentSong),
                       ),
                     ),
             ),
@@ -42,7 +43,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                       MaterialPageRoute(builder: (context) => NowPlaying()));
                 },
                 child: Text(
-                  widget.songModel.currentSong.title,
+                  songModel.currentSong.title,
                   overflow: TextOverflow.fade,
                   style: TextStyle(
                     fontSize: 16,
@@ -58,21 +59,21 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                 ),
               ),
               onTap: () {
-                widget.songModel.prev();
+                songModel.prev();
               },
             ),
             InkWell(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: widget.songModel.isPlaying
+                child: songModel.isPlaying
                     ? Icon(Icons.pause_circle_outline)
                     : Icon(Icons.play_circle_outline),
               ),
               onTap: () {
-                if (widget.songModel.isPlaying) {
-                  widget.songModel.pause();
+                if (songModel.isPlaying) {
+                  songModel.pause();
                 } else {
-                  widget.songModel.play();
+                  songModel.play();
                 }
               },
             ),
@@ -84,7 +85,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                 ),
               ),
               onTap: () {
-                widget.songModel.next();
+                songModel.next();
               },
             ),
           ],

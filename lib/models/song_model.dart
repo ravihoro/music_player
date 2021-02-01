@@ -9,18 +9,30 @@ class SongModel extends ChangeNotifier {
   //bool pause = false;
   AudioPlayer player = AudioPlayer();
   ProcessingState _processingState = ProcessingState.none;
-  List<Song> _songs;
+  List<Song> _songs; // Songs page displayed using this list
+  List<Song> _currentSongsList; // Songs playing from this list
 
-  List<Song> _albums;
-  List<Song> _artists;
+  List<Song> _albums; // Distinct songs in albums to display in albums page
+  List<Song> _artists; // Distinct songs by artitst to display in artists page
+
+  List<Song> get currentSongsList => _currentSongsList;
+
+  List<Song> _currentAlbum;
+  List<Song> _currentArtist;
 
   Duration _currentPosition = Duration.zero;
 
   List<Song> get albums => _albums;
   List<Song> get artists => _artists;
+  List<Song> get currentAlbum =>
+      _currentAlbum; // to display songs in particular album
+  List<Song> get currentArtist =>
+      _currentArtist; // to display songs bt particular artist
 
-  Song get currentSong => _currentSong;
+  Song get currentSong => _currentSong; //current song playing
+
   List<Song> get songs => _songs;
+
   bool get isPlaying => _isPlaying;
   ProcessingState get processingState => _processingState;
 
@@ -49,8 +61,19 @@ class SongModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setCurrentSongsList(List<Song> currentSongs) {
+    //print(currentSongs.length);
+    _currentSongsList = currentSongs;
+    notifyListeners();
+  }
+
   void setAlbums(List<Song> albums) {
     _albums = albums;
+    notifyListeners();
+  }
+
+  void setAlbum(List<Song> album) {
+    _currentAlbum = album;
     notifyListeners();
   }
 
@@ -59,29 +82,54 @@ class SongModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setArtist(List<Song> artist) {
+    _currentArtist = artist;
+    notifyListeners();
+  }
+
   void next() {
-    int index = _songs.indexOf(_currentSong);
-    int length = _songs.length;
+    int index = _currentSongsList.indexOf(_currentSong);
+    int length = _currentSongsList.length;
     index++;
     if (index >= length) {
       index = 0;
     }
-    //print("Index is: $index");
     stop();
-    _currentSong = songs[index];
+    _currentSong = _currentSongsList[index];
     play(true);
+
+    // int index = _songs.indexOf(_currentSong);
+    // int length = _songs.length;
+    // index++;
+    // if (index >= length) {
+    //   index = 0;
+    // }
+    // //print("Index is: $index");
+    // stop();
+    // _currentSong = songs[index];
+    // play(true);
   }
 
   void prev() {
-    int index = _songs.indexOf(_currentSong);
-    int length = _songs.length;
+    int index = _currentSongsList.indexOf(_currentSong);
+    int length = _currentSongsList.length;
     index--;
     if (index < 0) {
       index = length - 1;
     }
     stop();
-    _currentSong = songs[index];
+    _currentSong = _currentSongsList[index];
     play(true);
+
+    // int index = _songs.indexOf(_currentSong);
+    // int length = _songs.length;
+    // index--;
+    // if (index < 0) {
+    //   index = length - 1;
+    // }
+    // stop();
+    // _currentSong = songs[index];
+    // play(true);
   }
 
   void pause() {
