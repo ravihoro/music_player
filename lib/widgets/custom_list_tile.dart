@@ -31,7 +31,10 @@ class CustomListTile extends StatelessWidget {
         ),
       ),
       title: Text(
-        page == "songs" || page == "albumDetail" || page == "artistDetail"
+        page == "songs" ||
+                page == "albumDetail" ||
+                page == "artistDetail" ||
+                page == "nowPlaying"
             ? song.title
             : page == "albums"
                 ? song.album
@@ -41,13 +44,16 @@ class CustomListTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        page == "songs" || page == "albumDetail" || page == "album"
+        page == "songs" ||
+                page == "albumDetail" ||
+                page == "album" ||
+                page == "nowPlaying"
             ? song.artist
             : song.album,
         style: TextStyle(color: Colors.white),
       ),
       trailing: Text(
-        page == "songs" || page == "albumDetail"
+        page == "songs" || page == "albumDetail" || page == "nowPlaying"
             ? Duration(
                 milliseconds: int.parse(song.duration),
               ).toString().substring(2, 7)
@@ -129,6 +135,16 @@ class CustomListTile extends StatelessWidget {
           songModel.setArtist(artists);
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => ArtistDetails()));
+        } else if (page == "nowPlaying") {
+          final songModel = Provider.of<SongModel>(context, listen: false);
+          bool newSong = songModel.currentSong == null
+              ? true
+              : songModel.currentSong != song;
+
+          if (newSong) {
+            songModel.setCurrentSong(song);
+          }
+          songModel.play(newSong);
         }
       },
     );
