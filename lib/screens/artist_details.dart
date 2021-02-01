@@ -16,6 +16,7 @@ class ArtistDetails extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )
               : CustomView(page: "artistDetail"),
+          //bottomNavigationBar: CustomBottomBar(),
           bottomNavigationBar: Consumer<SongModel>(
             builder: (context, songModel, child) {
               //print(songModel.currentSong);

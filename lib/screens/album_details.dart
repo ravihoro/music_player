@@ -16,6 +16,7 @@ class AlbumDetails extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )
               : CustomView(page: "albumDetail"),
+          //bottomNavigationBar: CustomBottomBar(),
           bottomNavigationBar: Consumer<SongModel>(
             builder: (context, songModel, child) {
               //print(songModel.currentSong);

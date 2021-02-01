@@ -135,16 +135,17 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             Artists(),
           ],
         ),
-        bottomNavigationBar: Consumer<SongModel>(
-          builder: (context, songModel, child) {
-            //print(songModel.currentSong);
-            return songModel.currentSong != null
-                ? CustomBottomBar()
-                : Container(
-                    height: 0,
-                  );
-          },
-        ),
+        bottomNavigationBar: CustomBottomBar(),
+        // bottomNavigationBar: Consumer<SongModel>(
+        //   builder: (context, songModel, child) {
+        //     //print(songModel.currentSong);
+        //     return songModel.currentSong != null
+        //         ? CustomBottomBar()
+        //         : Container(
+        //             height: 0,
+        //           );
+        //   },
+        // ),
       ),
     );
   }

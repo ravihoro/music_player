@@ -34,16 +34,17 @@ class SongModel extends ChangeNotifier {
   List<Song> get songs => _songs;
 
   bool get isPlaying => _isPlaying;
-  ProcessingState get processingState => _processingState;
 
-  void setProcessingState(ProcessingState state) {
-    _processingState = state;
-    //notifyListeners();
-  }
+  //ProcessingState get processingState => _processingState;
 
-  void setCurrentPosition(Duration val) {
-    _currentPosition = val;
-  }
+  // void setProcessingState(ProcessingState state) {
+  //   _processingState = state;
+  //   //notifyListeners();
+  // }
+
+  // void setCurrentPosition(Duration val) {
+  //   _currentPosition = val;
+  // }
 
   void setIsPlaying() {
     _isPlaying = !_isPlaying;
@@ -87,14 +88,14 @@ class SongModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void next() {
+  void next([bool songFinished = false]) {
     int index = _currentSongsList.indexOf(_currentSong);
     int length = _currentSongsList.length;
     index++;
     if (index >= length) {
       index = 0;
     }
-    player.stop();
+    if (!songFinished) stop();
     _currentSong = _currentSongsList[index];
     play(true);
   }
@@ -106,7 +107,7 @@ class SongModel extends ChangeNotifier {
     if (index < 0) {
       index = length - 1;
     }
-    player.stop();
+    stop();
     _currentSong = _currentSongsList[index];
     play(true);
   }
@@ -114,16 +115,21 @@ class SongModel extends ChangeNotifier {
   void pause() {
     player.pause();
     if (isPlaying) setIsPlaying();
+    //notifyListeners();
+    //if (isPlaying) setIsPlaying();
   }
 
   void play([bool newSong = false]) {
     if (newSong) player.setUrl(_currentSong.uri);
     player.play();
     if (!isPlaying) setIsPlaying();
+    //notifyListeners();
+    //if (!isPlaying) setIsPlaying();
   }
 
   void stop() {
     player.stop();
     if (isPlaying) setIsPlaying();
+    //notifyListeners();
   }
 }
