@@ -128,7 +128,8 @@ class _NowPlayingState extends State<NowPlaying> {
                                           Duration(milliseconds: val.round()));
                                       if (val ==
                                           duration.inMilliseconds.toDouble()) {
-                                        songModel.stop();
+                                        songModel.next();
+                                        //songModel.stop();
                                       }
                                     });
                                   },

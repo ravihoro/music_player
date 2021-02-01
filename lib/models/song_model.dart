@@ -94,20 +94,9 @@ class SongModel extends ChangeNotifier {
     if (index >= length) {
       index = 0;
     }
-    stop();
+    player.stop();
     _currentSong = _currentSongsList[index];
     play(true);
-
-    // int index = _songs.indexOf(_currentSong);
-    // int length = _songs.length;
-    // index++;
-    // if (index >= length) {
-    //   index = 0;
-    // }
-    // //print("Index is: $index");
-    // stop();
-    // _currentSong = songs[index];
-    // play(true);
   }
 
   void prev() {
@@ -117,19 +106,9 @@ class SongModel extends ChangeNotifier {
     if (index < 0) {
       index = length - 1;
     }
-    stop();
+    player.stop();
     _currentSong = _currentSongsList[index];
     play(true);
-
-    // int index = _songs.indexOf(_currentSong);
-    // int length = _songs.length;
-    // index--;
-    // if (index < 0) {
-    //   index = length - 1;
-    // }
-    // stop();
-    // _currentSong = songs[index];
-    // play(true);
   }
 
   void pause() {
