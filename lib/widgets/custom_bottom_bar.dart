@@ -145,7 +145,9 @@ class CustomBottomBar extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
+                    //if (songModel.isPlaying) songModel.setIsPlaying();
                     songModel.prev();
+                    //songModel.setIsPlaying();
                   },
                 ),
                 InkWell(
@@ -156,11 +158,13 @@ class CustomBottomBar extends StatelessWidget {
                         : Icon(Icons.play_circle_outline),
                   ),
                   onTap: () {
-                    if (songModel.isPlaying) {
-                      songModel.pause();
-                    } else {
-                      songModel.play();
-                    }
+                    songModel.playPause();
+                    //songModel.setIsPlaying();
+                    // if (songModel.isPlaying) {
+                    //   songModel.pause();
+                    // } else {
+                    //   songModel.play();
+                    // }
                   },
                 ),
                 InkWell(
@@ -171,7 +175,9 @@ class CustomBottomBar extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
+                    //if (songModel.isPlaying) songModel.setIsPlaying();
                     songModel.next();
+                    //songModel.setIsPlaying();
                   },
                 ),
               ],

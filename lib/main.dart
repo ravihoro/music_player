@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './models/song_model.dart';
@@ -8,16 +11,25 @@ import './database/database_helper.dart';
 import './screens/screens.dart';
 import './widgets/custom_bottom_bar.dart';
 import './widgets/song_search.dart';
+import 'package:just_audio/just_audio.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     App(),
   );
 }
 
 class App extends StatelessWidget {
+  // final streamController = StreamController();
+
+  // void dispose() {
+  //   streamController.close();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    Stream<ProcessingState> stream;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<SongModel>(
@@ -28,15 +40,30 @@ class App extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        home: MyApp(),
+        home: Builder(
+          builder: (context) {
+            final songModel = Provider.of<SongModel>(context);
+            stream = songModel.player.processingStateStream;
+            stream.listen((event) {
+              if (event == ProcessingState.completed) {
+                songModel.next();
+              }
+            });
+            return MyApp();
+
+            // return StreamBuilder(
+            //   stream: songModel.player.processingStateStream,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.data == ProcessingState.completed) {
+            //       songModel.next(false);
+            //     }
+            //     return MyApp();
+            //   },
+            // );
+          },
+        ),
       ),
     );
-    // return ChangeNotifierProvider<SongModel>(
-    //   create: (context) => SongModel(),
-    //   child: MaterialApp(
-    //     home: MyApp(),
-    //   ),
-    // );
   }
 }
 
@@ -93,6 +120,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    //final songModel = Provider.of<SongModel>(context);
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(

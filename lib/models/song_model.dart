@@ -8,7 +8,7 @@ class SongModel extends ChangeNotifier {
   bool _isPlaying = false;
   //bool pause = false;
   AudioPlayer player = AudioPlayer();
-  ProcessingState _processingState = ProcessingState.none;
+  //ProcessingState _processingState = ProcessingState.none;
   List<Song> _songs; // Songs page displayed using this list
   List<Song> _currentSongsList; // Songs playing from this list
 
@@ -45,11 +45,6 @@ class SongModel extends ChangeNotifier {
   // void setCurrentPosition(Duration val) {
   //   _currentPosition = val;
   // }
-
-  void setIsPlaying() {
-    _isPlaying = !_isPlaying;
-    notifyListeners();
-  }
 
   void setCurrentSong(Song song) {
     _currentSong = song;
@@ -88,16 +83,29 @@ class SongModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void next([bool songFinished = false]) {
+  void setIsPlaying() {
+    _isPlaying = !_isPlaying;
+    notifyListeners();
+  }
+
+  void next() {
     int index = _currentSongsList.indexOf(_currentSong);
     int length = _currentSongsList.length;
     index++;
     if (index >= length) {
       index = 0;
     }
-    if (!songFinished) stop();
+    //if (isPlaying) setIsPlaying();
+    // if (songFinished)
+    //   player.stop();
+    // else {
+    //   if (isPlaying) setIsPlaying();
+    // }
+    //player.stop();
     _currentSong = _currentSongsList[index];
-    play(true);
+    playPause(true);
+    //play(true);
+    //if (!isPlaying) setIsPlaying();
   }
 
   void prev() {
@@ -107,29 +115,62 @@ class SongModel extends ChangeNotifier {
     if (index < 0) {
       index = length - 1;
     }
-    stop();
+    //if (isPlaying) setIsPlaying();
+    //player.stop();
     _currentSong = _currentSongsList[index];
-    play(true);
+    playPause(true);
+    //play(true);
+    //if (!isPlaying) setIsPlaying();
   }
 
   void pause() {
     player.pause();
-    if (isPlaying) setIsPlaying();
+    setIsPlaying();
+    //if (isPlaying) setIsPlaying();
     //notifyListeners();
     //if (isPlaying) setIsPlaying();
+  }
+
+  void playPause([bool newSong = false]) {
+    if (isPlaying && newSong) {
+      player.stop();
+      player.setUrl(_currentSong.uri);
+      player.play();
+      notifyListeners();
+    } else if (!isPlaying && newSong) {
+      player.stop();
+      player.setUrl(_currentSong.uri);
+      player.play();
+      setIsPlaying();
+    } else if (isPlaying && !newSong) {
+      player.pause();
+      setIsPlaying();
+    } else {
+      player.play();
+      setIsPlaying();
+    }
+
+    // if (isPlaying && !newSong) {
+    //   player.pause();
+    // } else {
+    //   if (newSong) player.setUrl(_currentSong.uri);
+    //   player.play();
+    // }
+    //setIsPlaying();
   }
 
   void play([bool newSong = false]) {
     if (newSong) player.setUrl(_currentSong.uri);
     player.play();
-    if (!isPlaying) setIsPlaying();
+    setIsPlaying();
+    //if (!isPlaying) setIsPlaying();
     //notifyListeners();
     //if (!isPlaying) setIsPlaying();
   }
 
   void stop() {
     player.stop();
-    if (isPlaying) setIsPlaying();
+    //if (isPlaying) setIsPlaying();
     //notifyListeners();
   }
 }

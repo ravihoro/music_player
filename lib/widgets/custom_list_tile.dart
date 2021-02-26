@@ -77,7 +77,9 @@ class CustomListTile extends StatelessWidget {
           if (newSong) {
             songModel.setCurrentSong(song);
           }
-          songModel.play(newSong);
+          songModel.playPause(newSong);
+          //songModel.setIsPlaying();
+          //songModel.play(newSong);
           // Navigator.of(context)
           //     .push(MaterialPageRoute(builder: (context) => NowPlaying()));
         } else if (page == "albums") {
@@ -106,7 +108,9 @@ class CustomListTile extends StatelessWidget {
           if (newSong) {
             songModel.setCurrentSong(song);
           }
-          songModel.play(newSong);
+          songModel.playPause(newSong);
+          //songModel.setIsPlaying();
+          //songModel.play(newSong);
         } else if (page == "artistDetail") {
           final songModel = Provider.of<SongModel>(context, listen: false);
 
@@ -125,7 +129,9 @@ class CustomListTile extends StatelessWidget {
           if (newSong) {
             songModel.setCurrentSong(song);
           }
-          songModel.play(newSong);
+          songModel.playPause(newSong);
+          //songModel.setIsPlaying();
+          //songModel.play(newSong);
         } else if (page == "artists") {
           final songModel = Provider.of<SongModel>(context, listen: false);
           final databaseHelper =
@@ -144,7 +150,10 @@ class CustomListTile extends StatelessWidget {
           if (newSong) {
             songModel.setCurrentSong(song);
           }
-          songModel.play(newSong);
+
+          songModel.playPause(newSong);
+          //songModel.setIsPlaying();
+          //songModel.play(newSong);
         }
       },
     );

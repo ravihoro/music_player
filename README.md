@@ -6,7 +6,7 @@ Link to apk: https://drive.google.com/file/d/1sPgupNiKouBWgtPKc9dBhhIBk5pyjJj9/v
 
 ## Features
 - Play songs from local storage
-- Sqflite database for quering songs
+- SQLite database for quering songs
 - Play/pause current song
 - Skip to next/previous song
 - Search songs
@@ -15,8 +15,8 @@ Link to apk: https://drive.google.com/file/d/1sPgupNiKouBWgtPKc9dBhhIBk5pyjJj9/v
 
 ## Tools Used
 - Flutter
-- Sqflite
-- ChangeNotifierProvider
+- SQLlite
+- Provider package
 - Flutter Audio Query plugin
 
 ## Screenshots
