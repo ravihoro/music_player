@@ -1,11 +1,20 @@
-import 'package:flutter/foundation.dart';
-//import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:stacked/stacked.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/song.dart';
 
-class SongModel extends ChangeNotifier {
+class BaseModel extends BaseViewModel {
   Song _currentSong;
   bool _isPlaying = false;
+
+  double _sliderValue = 0.0;
+
+  get sliderValue => _sliderValue;
+
+  set sliderValue(double value) {
+    _sliderValue = value;
+    notifyListeners();
+  }
+
   //bool pause = false;
   AudioPlayer player = AudioPlayer();
   //ProcessingState _processingState = ProcessingState.none;

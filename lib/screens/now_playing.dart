@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:music_player/widgets/custom_list_tile.dart';
 import '../models/song_model.dart';
 import 'package:provider/provider.dart';

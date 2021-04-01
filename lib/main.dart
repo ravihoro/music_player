@@ -1,8 +1,10 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:music_player/app/locator.dart';
+//import 'package:music_player/view/songs_view.dart';
+import 'package:music_player/viewmodel/base_model.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 import './models/song_model.dart';
 import './models/song.dart';
 import './screens/songs.dart';
@@ -12,12 +14,28 @@ import './screens/screens.dart';
 import './widgets/custom_bottom_bar.dart';
 import './widgets/song_search.dart';
 import 'package:just_audio/just_audio.dart';
+import './view/home_view.dart';
 
 void main() {
+  setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    App(),
+    DemoApp(),
   );
+}
+
+class DemoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<BaseModel>.reactive(
+      builder: (context, model, child) {
+        return MaterialApp(
+          home: HomeView(),
+        );
+      },
+      viewModelBuilder: () => locator<BaseModel>(),
+    );
+  }
 }
 
 class App extends StatelessWidget {
