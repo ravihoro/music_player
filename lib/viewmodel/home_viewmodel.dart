@@ -1,4 +1,4 @@
-import 'package:music_player/database/database_helper.dart';
+import 'package:music_player/services/database_helper.dart';
 import 'package:music_player/viewmodel/base_model.dart';
 import 'package:stacked/stacked.dart';
 import '../app/locator.dart';

@@ -12,7 +12,7 @@ Link to apk: https://drive.google.com/file/d/1sPgupNiKouBWgtPKc9dBhhIBk5pyjJj9/v
 - Search songs
 - Songs grouped based on albums and artists
 - Control song from bottom bar
-- Provider package for state management
+- Follows MVVM architecture implemented using Stacked package
 
 ## Technologies Used
 - Flutter

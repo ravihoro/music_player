@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:music_player/database/database_helper.dart';
-// import 'package:music_player/screens/album_details.dart';
 import 'package:stacked/stacked.dart';
-import '../models/models.dart';
 import '../util/utility.dart';
-import 'package:provider/provider.dart';
-// import '../screens/screens.dart';
+import '../models/song.dart';
 import '../viewmodel/base_model.dart';
 
 class CustomListTile extends ViewModelWidget<BaseModel> {

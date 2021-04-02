@@ -1,11 +1,8 @@
-import 'dart:async';
-
-import 'package:music_player/database/database_helper.dart';
+import 'package:music_player/services/database_helper.dart';
 import 'package:stacked/stacked.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/song.dart';
 import '../app/locator.dart';
-//import '../services/database_helper.dart';
 
 class BaseModel extends BaseViewModel {
   Song _currentSong;
