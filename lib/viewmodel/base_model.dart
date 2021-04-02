@@ -1,13 +1,28 @@
-import 'package:flutter/foundation.dart';
-//import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:music_player/services/database_helper.dart';
+import 'package:stacked/stacked.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/song.dart';
+import '../app/locator.dart';
 
-class SongModel extends ChangeNotifier {
+class BaseModel extends BaseViewModel {
   Song _currentSong;
   bool _isPlaying = false;
-  //bool pause = false;
+
+  DatabaseHelper databaseHelper = locator<DatabaseHelper>();
+
+  double _sliderValue = 0.0;
+
+  get sliderValue => _sliderValue;
+
+  set sliderValue(double value) {
+    _sliderValue = value;
+    notifyListeners();
+  }
+
   AudioPlayer player = AudioPlayer();
+
+  //bool pause = false;
+
   //ProcessingState _processingState = ProcessingState.none;
   List<Song> _songs; // Songs page displayed using this list
   List<Song> _currentSongsList; // Songs playing from this list
@@ -20,7 +35,7 @@ class SongModel extends ChangeNotifier {
   List<Song> _currentAlbum;
   List<Song> _currentArtist;
 
-  Duration _currentPosition = Duration.zero;
+  //Duration _currentPosition = Duration.zero;
 
   List<Song> get albums => _albums;
   List<Song> get artists => _artists;
@@ -149,7 +164,6 @@ class SongModel extends ChangeNotifier {
       player.play();
       setIsPlaying();
     }
-
     // if (isPlaying && !newSong) {
     //   player.pause();
     // } else {

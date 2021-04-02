@@ -34,6 +34,8 @@ dependencies:
   sqflite:
   path_provider:
   sliding_up_panel:
+  stacked: 
+  get_it:
 
 dev_dependencies:
   flutter_test:
