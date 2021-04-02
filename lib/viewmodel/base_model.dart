@@ -1,10 +1,17 @@
+import 'dart:async';
+
+import 'package:music_player/database/database_helper.dart';
 import 'package:stacked/stacked.dart';
 import 'package:just_audio/just_audio.dart';
 import '../models/song.dart';
+import '../app/locator.dart';
+//import '../services/database_helper.dart';
 
 class BaseModel extends BaseViewModel {
   Song _currentSong;
   bool _isPlaying = false;
+
+  DatabaseHelper databaseHelper = locator<DatabaseHelper>();
 
   double _sliderValue = 0.0;
 
@@ -15,8 +22,10 @@ class BaseModel extends BaseViewModel {
     notifyListeners();
   }
 
-  //bool pause = false;
   AudioPlayer player = AudioPlayer();
+
+  //bool pause = false;
+
   //ProcessingState _processingState = ProcessingState.none;
   List<Song> _songs; // Songs page displayed using this list
   List<Song> _currentSongsList; // Songs playing from this list
@@ -158,7 +167,6 @@ class BaseModel extends BaseViewModel {
       player.play();
       setIsPlaying();
     }
-
     // if (isPlaying && !newSong) {
     //   player.pause();
     // } else {

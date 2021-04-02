@@ -6,6 +6,7 @@ import './songs_view.dart';
 import './albums_view.dart';
 import './artists_view.dart';
 import '../app/locator.dart';
+import '../widgets/song_search.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -28,7 +29,7 @@ class HomeView extends StatelessWidget {
                   icon: Icon(Icons.search),
                   color: Colors.amber,
                   onPressed: () {
-                    //showSearch(context: context, delegate: SongSearch());
+                    showSearch(context: context, delegate: SongSearch());
                   },
                 ),
               ],

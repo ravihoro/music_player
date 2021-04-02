@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../models/models.dart';
+import 'package:music_player/app/locator.dart';
 import './custom_list_tile.dart';
+import '../viewmodel/base_model.dart';
 
 class SongSearch extends SearchDelegate {
   @override
@@ -37,28 +37,25 @@ class SongSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Consumer<SongModel>(
-      builder: (context, songModel, child) {
-        return Container(
-          color: Colors.grey[850],
-          child: ListView.builder(
-            itemCount: songModel.songs.length,
-            itemBuilder: (context, index) {
-              return songModel.songs[index].title
-                          .toLowerCase()
-                          .contains(query.toLowerCase()) ||
-                      songModel.songs[index].album
-                          .toLowerCase()
-                          .contains(query.toLowerCase()) ||
-                      songModel.songs[index].artist
-                          .toLowerCase()
-                          .contains(query.toLowerCase())
-                  ? CustomListTile(songModel.songs[index], "songs", true)
-                  : Container();
-            },
-          ),
-        );
-      },
+    BaseModel model = locator<BaseModel>();
+    return Container(
+      color: Colors.grey[850],
+      child: ListView.builder(
+        itemCount: model.songs.length,
+        itemBuilder: (context, index) {
+          return model.songs[index].title
+                  .toLowerCase()
+                  .contains(query.toString().toLowerCase()) //||
+              // model.songs[index].album
+              //     .toLowerCase()
+              //     .contains(query.toString().toLowerCase()) ||
+              // model.songs[index].artist
+              //     .toLowerCase()
+              //     .contains(query.toString().toLowerCase())
+              ? CustomListTile(model.songs[index], "songs", true)
+              : Container();
+        },
+      ),
     );
   }
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:music_player/database/database_helper.dart';
-import 'package:music_player/screens/album_details.dart';
+// import 'package:music_player/screens/album_details.dart';
 import 'package:stacked/stacked.dart';
 import '../models/models.dart';
 import '../util/utility.dart';
 import 'package:provider/provider.dart';
-import '../screens/screens.dart';
+// import '../screens/screens.dart';
 import '../viewmodel/base_model.dart';
 
 class CustomListTile extends ViewModelWidget<BaseModel> {
@@ -81,16 +81,21 @@ class CustomListTile extends ViewModelWidget<BaseModel> {
           model.playPause(newSong);
           //songModel.setIsPlaying();
           //songModel.play(newSong);
+
+          //Navigator.pushNamed(context, '/now_playing');
+
           // Navigator.of(context)
           //     .push(MaterialPageRoute(builder: (context) => NowPlaying()));
         } else if (page == "albums") {
           //final songModel = Provider.of<SongModel>(context, listen: false);
-          final databaseHelper =
-              Provider.of<DatabaseHelper>(context, listen: false);
-          List<Song> album = await databaseHelper.fetchAlbumById(song.albumId);
+          // final databaseHelper =
+          //     Provider.of<DatabaseHelper>(context, listen: false);
+          List<Song> album =
+              await model.databaseHelper.fetchAlbumById(song.albumId);
           model.setAlbum(album);
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => AlbumDetails()));
+          Navigator.pushNamed(context, '/album_detail');
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => AlbumDetails()));
         } else if (page == "albumDetail") {
           //final songModel = Provider.of<SongModel>(context, listen: false);
 
@@ -132,14 +137,15 @@ class CustomListTile extends ViewModelWidget<BaseModel> {
           //songModel.setIsPlaying();
           //songModel.play(newSong);
         } else if (page == "artists") {
-          final songModel = Provider.of<SongModel>(context, listen: false);
-          final databaseHelper =
-              Provider.of<DatabaseHelper>(context, listen: false);
+          //final songModel = Provider.of<SongModel>(context, listen: false);
+          //final databaseHelper =
+          //Provider.of<DatabaseHelper>(context, listen: false);
           List<Song> artists =
-              await databaseHelper.fetchArtistById(song.artistId);
-          songModel.setArtist(artists);
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => ArtistDetails()));
+              await model.databaseHelper.fetchArtistById(song.artistId);
+          model.setArtist(artists);
+          Navigator.pushNamed(context, '/artist_detail');
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => ArtistDetails()));
         } else if (page == "nowPlaying") {
           //final songModel = Provider.of<SongModel>(context, listen: false);
           bool newSong =

@@ -108,6 +108,12 @@ class NowPlayingView extends ViewModelWidget<BaseModel> {
                         onChanged: (val) {
                           if (val < duration.inMilliseconds.toDouble()) {
                             model.sliderValue = val;
+                            model.player.seek(
+                              Duration(
+                                milliseconds: val.round(),
+                              ),
+                            );
+
                             // setState(() {
                             //   sliderValue = val;
                             //   model.player
