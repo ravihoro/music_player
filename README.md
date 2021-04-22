@@ -4,6 +4,8 @@ A music player built using Flutter.
 
 Link to apk: https://drive.google.com/file/d/1sPgupNiKouBWgtPKc9dBhhIBk5pyjJj9/view
 
+Video Link: https://drive.google.com/file/d/160s31hzd9msYOrFA_p5UQz5XKteVke8l/view?usp=sharing
+
 ## Features
 - Play songs from local storage
 - SQLite database for storing song information and quering songs
